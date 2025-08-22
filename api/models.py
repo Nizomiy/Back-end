@@ -20,6 +20,7 @@ class TitleModel(models.Model):
 
 
 class SectionsModel(models.Model):
+    title_name = models.ForeignKey(TitleModel, on_delete=models.CASCADE)
     main_paragraph = models.TextField()
     university_name = models.CharField(max_length=64)
     text1 = models.TextField()
