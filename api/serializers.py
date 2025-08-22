@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import PagesModel, TitleModel, SectionsModel
+from .utils import validate_phone_number
 
 
 class PagesSerializer(serializers.ModelSerializer):
@@ -15,6 +16,8 @@ class TitleSerializer(serializers.ModelSerializer):
 
 
 class SectionsSerializer(serializers.ModelSerializer):
+    phone_number = serializers.CharField(validators=[validate_phone_number])
+
     class Meta:
         model = SectionsModel
         fields = "__all__"
