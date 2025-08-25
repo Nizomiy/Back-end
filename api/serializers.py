@@ -89,33 +89,17 @@ class NewsLinkModelSerializer(serializers.ModelSerializer):
         ]
 
 
-class DepartmentSerializer(serializers.ModelSerializer):
-    children = serializers.SerializerMethodField()
-
+class DepartmentFlatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department
-        fields = ["id", "title", "row", "order", "parent", "children"]
+        fields = ["id", "title", "row", "order", "parent"]
 
-    def get_children(self, obj):
-        children = obj.children.all().order_by("row", "order")
-        return DepartmentSerializer(children, many=True).data
-
-
-class CouncilSerializer(serializers.ModelSerializer):
-    departments = serializers.SerializerMethodField()
-
+class CouncilFlatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Council
-        fields = ["id", "title", "departments"]
+        fields = ["id", "title"]
 
-    def get_departments(self, obj):
-        departments = obj.departments.filter(parent__isnull=True).order_by("row", "order")
-        return DepartmentSerializer(departments, many=True).data
-
-
-class GenealogySerializer(serializers.ModelSerializer):
-    councils = CouncilSerializer(many=True, read_only=True)
-
+class GenealogyFlatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genealogy
-        fields = ["id", "title_name", "councils"]
+        fields = ["id", "title_name"]
