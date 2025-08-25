@@ -15,8 +15,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf import settings
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
 
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Nizomiy API",
+        default_version='v1',
+        description="Nizomiy Api",
+        terms_of_service="",
+        license=openapi.License(name=""),
+    ),
+    public=True,
+)
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('router/',include('api.urls'))
+
 ]
