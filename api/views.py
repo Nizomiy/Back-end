@@ -17,7 +17,7 @@ class SectionsViewSet(viewsets.ModelViewSet):
     queryset = SectionsModel.objects.all()
     serializer_class = SectionsSerializer
 
-    
+
 class LinksModelViewSet(viewsets.ModelViewSet):
     queryset = LinksModel.objects.all()
     serializer_class = LinksModelSerializer

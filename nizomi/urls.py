@@ -36,7 +36,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('api/', include('api.urls')),
-    path('dashboard/', include('dashboard.urls')),
 ]
 
 # Add media and static files serving for development

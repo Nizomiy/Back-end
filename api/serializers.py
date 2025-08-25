@@ -39,7 +39,7 @@ class NewsModelSerializer(serializers.ModelSerializer):
             "title",
             "image",
             "date_time",
-            "text",
+            "text1",
             "text2",
         ]
 
@@ -64,6 +64,7 @@ class NewsLinkModelSerializer(serializers.ModelSerializer):
         model = NewsLinkModel
         fields = [
             "id",
+            "news",
             "text",
             "url",
         ]
