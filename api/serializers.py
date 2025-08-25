@@ -5,21 +5,39 @@ from .models import PagesModel, TitleModel, SectionsModel, LinksModel, NewsModel
 class PagesSerializer(serializers.ModelSerializer):
     class Meta:
         model = PagesModel
-        fields = "__all__"
+        fields = [
+            "logo_name",
+            "logo",
+            "img",
+            "text1",
+            "text2",
+        ]
 
 
 class TitleSerializer(serializers.ModelSerializer):
     class Meta:
         model = TitleModel
-        fields = "__all__"
+        fields = [
+            "name",
+        ]
 
 
 class SectionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = SectionsModel
-        fields = "__all__"
+        fields = [
+            "title_name",
+            "main_paragraph",
+            "university_name",
+            "text1",
+            "text2",
+            "img",
+            "phone_number",
+            "date_time",
+            "years"
+        ]
 
-        
+
 class LinksModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = LinksModel
