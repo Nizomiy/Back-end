@@ -71,3 +71,30 @@ class NewsLinkModel(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class Genealogy(models.Model):
+    title_name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.title_name
+
+
+class Council(models.Model):
+    rector = models.ForeignKey(Genealogy, on_delete=models.CASCADE, related_name="councils")
+    title = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.title
+
+
+class Department(models.Model):
+    council = models.ForeignKey(Council, on_delete=models.CASCADE, related_name="departments")
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name="children")
+    title = models.CharField(max_length=255)
+
+    row = models.IntegerField(default=0)
+    order = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.title

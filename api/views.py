@@ -1,6 +1,18 @@
 from rest_framework import viewsets
-from .models import PagesModel, TitleModel, SectionsModel, LinksModel, NewsModel, FooterModel, NewsLinkModel
-from .serializers import PagesSerializer, TitleSerializer, SectionsSerializer, LinksModelSerializer, NewsModelSerializer, FooterModelSerializer, NewsLinkModelSerializer
+from .models import PagesModel, TitleModel, SectionsModel, LinksModel, NewsModel, FooterModel, NewsLinkModel, Genealogy, \
+    Council, Department
+from .serializers import PagesSerializer, TitleSerializer, SectionsSerializer, LinksModelSerializer, \
+    NewsModelSerializer, FooterModelSerializer, NewsLinkModelSerializer, GenealogySerializer, CouncilSerializer, \
+    DepartmentSerializer
+from rest_framework.response import Response
+
+
+class GenealogyTreeViewSet(viewsets.ViewSet):
+
+    def list(self, request):
+        genealogies = Genealogy.objects.all()
+        serializer = GenealogySerializer(genealogies, many=True)
+        return Response(serializer.data)
 
 
 class PagesViewSet(viewsets.ModelViewSet):

@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import PagesModel, TitleModel, SectionsModel, LinksModel, NewsModel, FooterModel, NewsLinkModel
+from .models import PagesModel, TitleModel, SectionsModel, LinksModel, NewsModel, FooterModel, NewsLinkModel, Council, \
+    Department, Genealogy
 
 
 class PagesSerializer(serializers.ModelSerializer):
@@ -86,3 +87,35 @@ class NewsLinkModelSerializer(serializers.ModelSerializer):
             "text",
             "url",
         ]
+
+
+class DepartmentSerializer(serializers.ModelSerializer):
+    children = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Department
+        fields = ["id", "title", "row", "order", "parent", "children"]
+
+    def get_children(self, obj):
+        children = obj.children.all().order_by("row", "order")
+        return DepartmentSerializer(children, many=True).data
+
+
+class CouncilSerializer(serializers.ModelSerializer):
+    departments = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Council
+        fields = ["id", "title", "departments"]
+
+    def get_departments(self, obj):
+        departments = obj.departments.filter(parent__isnull=True).order_by("row", "order")
+        return DepartmentSerializer(departments, many=True).data
+
+
+class GenealogySerializer(serializers.ModelSerializer):
+    councils = CouncilSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Genealogy
+        fields = ["id", "title_name", "councils"]
